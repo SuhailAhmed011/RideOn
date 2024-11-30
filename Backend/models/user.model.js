@@ -37,7 +37,7 @@ userSchema.methods.generateAuthTokens = function(){
     return token;
 }
 // its used compare the password with what user type password
-userSchema.methods.comparePassword = async function(){
+userSchema.methods.comparePassword = async function(password){
     return await bcrypt.compare(password, this.password)
 }
 // its change password to hash password form

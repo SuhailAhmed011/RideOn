@@ -108,3 +108,103 @@ To ensure proper functionality, make sure the following dependencies are install
 
 bcrypt for password hashing.
 jsonwebtoken for token generation.
+
+
+
+#Login Route  `/users/login`
+
+
+## Overview
+This API allows users to sign up and log in. Below are the details for the `/users/signup` and `/users/login` endpoints.
+
+---
+
+## Endpoints
+
+### 1. User Signup
+
+**Method:** `POST`  
+**Endpoint:** `/users/signup`
+
+**Description:**  
+Allows a user to register for the service by providing their email and password.
+
+**Request Body:**  
+- `email` (string): User's email address. Must be unique.  
+- `password` (string): User's password. Minimum 6 characters recommended.
+
+**Responses:**  
+- **201 Created:**  
+  Message: "User registered successfully."  
+
+- **400 Bad Request:**  
+  Error: "Email already exists."
+
+---
+
+### 2. User Login
+
+**Method:** `POST`  
+**Endpoint:** `/users/login`
+
+**Description:**  
+Allows a registered user to log in by providing their email and password.
+
+**Request Body:**  
+- `email` (string): User's registered email address.  
+- `password` (string): User's password.
+
+**Responses:**  
+- **200 OK:**  
+  Message: "Login successful."  
+  Token: "jwt-token-here"  
+
+- **401 Unauthorized:**  
+  Error: "Invalid email or password."  
+
+- **404 Not Found:**  
+  Error: "User not registered. Please sign up first."
+
+---
+
+## Error Handling
+
+### Common Errors
+- **400 Bad Request:** Invalid data in the request body (e.g., missing fields, invalid email format).  
+- **401 Unauthorized:** Incorrect email or password during login.  
+- **404 Not Found:** Trying to log in without signing up.
+
+---
+
+## Sample Request and Response
+
+### Signup Example  
+**Request:**  
+`POST /users/signup`  
+Body:  
+`{ "email": "user@example.com", "password": "securepassword123" }`
+
+**Response:**  
+`{ "message": "User registered successfully." }`
+
+---
+
+### Login Example  
+**Request:**  
+`POST /users/login`  
+Body:  
+`{ "email": "user@example.com", "password": "securepassword123" }`
+
+**Response:**  
+`{ "message": "Login successful.", "token": "jwt-token-here" }`
+
+---
+
+## Authentication Notes
+- The token returned during login should be sent in the `Authorization` header with the format `Bearer <token>` for accessing protected routes.  
+- Example:  
+  `Authorization: Bearer jwt-token-here`
+
+---
+
+
