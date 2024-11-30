@@ -6,10 +6,12 @@ const cors = require("cors")
 const connectToDb = require("./Database/db")
 connectToDb();
 const userRoute = require("./routes/user.routes")
+const cookieParser = require("cookie-parser")
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
 
 
 
