@@ -1,18 +1,33 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import axios from 'axios'
+import { driverDataContext } from '../context/DriverContext'
+import { useNavigate } from 'react-router-dom'
 
 const DriverLogin = () => {
   const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
-const [driverdata, setDriverdata] = useState({})
 
-const submitHandlerButton = (e) => {
+
+const {driver, setDriver} = React.useContext(driverDataContext)
+const navigate = useNavigate()
+
+const submitHandlerButton = async (e) => {
 e.preventDefault();
-setDriverdata({
+const driver = {
   email: email,
-  password: password
-})
+  password
+}
+
+const res = await axios.post(`${import.meta.env.VITE_MAIN_URL}/driver/login`, driver)
+
+if(res.status === 200){
+  const data = res.data
+  setDriver(data.driver)
+  localStorage.setItem('token', data.token)
+  navigate('/driver-home')
+}
 
 
 setEmail('')
