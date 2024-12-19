@@ -5,6 +5,8 @@ import "remixicon/fonts/remixicon.css";
 import LocationSerach from "../components/LocationSerach";
 import VehiclePanel from "../components/VehiclePanel";
 import SelectedRide from "../components/SelectedRide";
+import LookingForDriver from "../components/LookingForDriver";
+import WaitingForDriver from "../components/WaitingForDriver";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -13,15 +15,19 @@ const Home = () => {
   const fullScreenRef = useRef(null);
   const fullScreenCloseRef = useRef(null);
   const vehiclePannelRef = useRef(null);
-  const selectedRidePannelRef = useRef(null)
+  const selectedRidePannelRef = useRef(null);
+  const lookingForRideRef = useRef(null);
+  const waitingForDriverRef = useRef(null);
   const [vehiclePannel, setVehiclePannel] = useState(false);
-  const [selectedRidePannel, setSelectedRidePanel] = useState(false)
+  const [selectedRidePannel, setSelectedRidePanel] = useState(false);
+  const [lookingForRide, setLookingForRide] = useState(false)
+  const [waitingForDriver, setWaitingForDriver] = useState(false)
 
   const submitButtonHandler = (e) => {
     e.preventDefault();
   };
 
-  // Using Gsap here for transition of pannels
+  // Using Gsap here for transition of pannels- main pannel
   useGSAP(
     function () {
       if (fullScreen) {
@@ -43,7 +49,7 @@ const Home = () => {
     [fullScreen]
   );
 
-  // Using Gsap here for transition of pannels
+  // Using Gsap here for transition of pannels- all ride pannel
   useGSAP(
     function () {
       if (vehiclePannel) {
@@ -58,7 +64,7 @@ const Home = () => {
     },
     [vehiclePannel]
   );
-  // Using Gsap here for transition of pannels
+  // Using Gsap here for transition of pannels- ride select pannel
   useGSAP(
     function () {
       if (selectedRidePannel) {
@@ -72,6 +78,36 @@ const Home = () => {
       }
     },
     [selectedRidePannel]
+  );
+  // Using Gsap here for transition of pannels- looking for ride pannel  
+  useGSAP(
+    function () {
+      if (lookingForRide) {
+        gsap.to(lookingForRideRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(lookingForRideRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [lookingForRide]
+  );
+  // Using Gsap here for transition of pannels- waiting for driver pannel
+  useGSAP(
+    function () {
+      if (waitingForDriver) {
+        gsap.to(waitingForDriverRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(waitingForDriverRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [waitingForDriver]
   );
   return (
     <div className="h-screen relative overflow-hidden">
@@ -142,15 +178,26 @@ const Home = () => {
         ref={vehiclePannelRef}
         className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white"
       >
-        <VehiclePanel setSelectedRidePanel={setSelectedRidePanel} setVehiclePannel={setVehiclePannel} />
+        <VehiclePanel
+          setSelectedRidePanel={setSelectedRidePanel}
+          setVehiclePannel={setVehiclePannel}
+        />
       </div>
-
       <div
         ref={selectedRidePannelRef}
         className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white"
       >
-        <SelectedRide/>
+        <SelectedRide setSelectedRidePanel={setSelectedRidePanel} setLookingForRide={setLookingForRide} /> 
       </div>
+      <div ref={lookingForRideRef} className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white">
+        
+       <LookingForDriver setLookingForRide={setLookingForRide}/>
+      </div>
+
+      <div ref={waitingForDriverRef} className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white">
+        <WaitingForDriver waitingForDriver={waitingForDriver}/>
+        
+       </div>
     </div>
   );
 };

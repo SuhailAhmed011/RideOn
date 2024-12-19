@@ -5,10 +5,10 @@ const VehiclePanel = (props) => {
   return (
     // here code of vehicle pannel open
     <div>
-        <h5 onClick={()=>{
-        props.setVehiclePannel(false)
-      }} className="p-3 w-[90%] text-end absolute top-0 "><i className=" text-xl ri-arrow-down-wide-fill"></i></h5>
-      <h3 className=" ml-2 text-lg font-medium">Book Your Ride</h3>
+          <h5 onClick={()=>{
+          props.setVehiclePannel(false)
+        }} className="p-3 w-[90%] text-end absolute top-0 "><i className=" text-xl ri-arrow-down-wide-fill"></i></h5>
+        <h3 className=" ml-2 text-lg font-medium">Book Your Ride</h3>
         <div onClick={()=>{
             props.setSelectedRidePanel(true)
         }} className="flex items-center justify-between w-full p-3 border-2 active:border-black rounded-xl">
