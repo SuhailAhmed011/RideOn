@@ -11,6 +11,7 @@ import UserLogout from './Pages/UserLogout'
 import DriverHome from './Pages/DriverHome'
 import DriverProtected from './Pages/DrvierProtected'
 import DriverLogout from './Pages/DriverLogout'
+import StartRidding from './Pages/StartRidding'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/user/logout' element = {<UserProtected><UserLogout/></UserProtected>}/>
         <Route path='/driver-home' element={<DriverProtected><DriverHome/></DriverProtected>}/>
         <Route path='/driver/logout' element = {<DriverProtected><DriverLogout/></DriverProtected>}/>
+        <Route path='/riding' element = {<StartRidding/>}/>
       </Routes>
     </div>
   )

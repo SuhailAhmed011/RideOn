@@ -1,18 +1,13 @@
-import React from "react";
+import React from 'react'
 
-const WaitingForDriver = (props) => {
+const StartRidding = () => {
   return (
-    <div>
-      <h5
-        onClick={() => {
-          props.waitingForDriver(false);
-        }}
-        className="p-3 w-[90%] text-end absolute top-0 "
-      >
-        <i className=" text-xl ri-arrow-down-wide-fill"></i>
-      </h5>
-
-      <div className="flex items-center justify-between">
+    <div className='h-screen'>
+        <div className='h-1/2'>
+            <img className='h-full w-full object-cover' src="/public/images/map.jpg" alt="map" />
+        </div>
+        <div className='h-1/2'>
+        <div className="flex items-center justify-between">
         <img className="h-12" src="/public/images/car.png" alt="car" />
         <div className="text-right">
           <h2 className="text-lg font-medium">Suhail </h2>
@@ -28,10 +23,11 @@ const WaitingForDriver = (props) => {
             Hotel Imperial Prime, Bhilwara{" "}
           </p>
         </div>
-        <button className='w-full bg-[#30336b] rounded-xl text-white font-medium p-2 mt-5'>Payment</button>
       </div>
+            <button>Payment</button>
+        </div>
     </div>
-  );
-};
+  )
+}
 
-export default WaitingForDriver;
+export default StartRidding
