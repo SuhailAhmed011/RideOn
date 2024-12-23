@@ -6,6 +6,7 @@ import AcceptRidePopUpPannel from '../components/AcceptRidePopUpPannel';
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react'
 
+
 function DriverHome() {
   const [ridePopUpPannel, setRidePopUpPannel] = useState(true)
   const [acceptRidePopUpPannel, setAcceptRidePopUpPannel] = useState(false)
@@ -58,7 +59,7 @@ function DriverHome() {
           alt="map"
         />
       </div> 
-      <div className="h-2/5 p-6 bg-[#fffa65] "> 
+      <div className="h-2/5 p-6 rounded-t-2xl bg-[#fffa65] "> 
       <DriverDetails/>
      </div>
       <div ref={ridePopUpPannelRef} className=" fixed z-10 bottom-0 px-3 py-6 translate-y-full w-full bg-white">
@@ -67,6 +68,7 @@ function DriverHome() {
       <div ref={acceptRidePopUpPannelRef} className=" fixed z-10 h-screen bottom-0 px-3 py-6 translate-y-full w-full bg-white">
         <AcceptRidePopUpPannel setAcceptRidePopUpPannel={setAcceptRidePopUpPannel} setRidePopUpPannel={setRidePopUpPannel}/>
       </div>
+      
     </div>
   );
 }

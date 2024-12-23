@@ -1,23 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom"; 
 
-const AcceptRidePopUpPannel = (props) => {
-  const [otp, setOtp] = useState("");
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
+const FinishRide = (props) => {
   return (
     <div>
       <h5
-        onClick={() => {
-          props.setRidePopUpPannel(false);
-          props.setAcceptRidePopUpPannel(false);
+        onClick={()=>{
+            props.setFinishedRide(false)
         }}
         className="p-3 w-[90%] text-end absolute top-0 "
       >
         <i className=" text-xl ri-arrow-down-wide-fill"></i>
       </h5>
-      <h3 className=" ml-2 text-lg font-bold">Confirm To Start Ride!!</h3>
+
+      <h3 className=" ml-2 text-lg font-bold">Ride Completed!!</h3>
 
       <div className="flex items-center justify-between mt-6 ">
         <div className="flex items-center gap-3">
@@ -59,42 +55,20 @@ const AcceptRidePopUpPannel = (props) => {
           </div>
         </div>
         <div className="w-full">
-          <form
-            onSubmit={(e) => {
-              submitHandler(e);
-            }}
-          >
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => {
-                setOtp(e.target.value);
-              }}
-              placeholder="ENTER OTP"
-              className="mt-3 px-6 py-4 border border-black font-mono ml-14 rounded-md placeholder:text-lg text-center "
-            />
-            <div className="flex items-center  justify-between gap-5 w-full mt-2">
-              <Link
-                to="/driver-riding"
-                className="w-full bg-[#f9ca24] rounded-xl text-center text-white font-medium p-2 mt-5"
-              >
-                Confirm
-              </Link>
-              <button
-                onClick={() => {
-                  props.setAcceptRidePopUpPannel(false);
-                  props.setRidePopUpPannel(false);
-                }}
-                className="w-full bg-[#ff3838] rounded-xl text-white font-medium p-2 mt-5"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+          <div className="flex items-center  justify-between gap-5 w-full mt-2">
+            <Link to='/driver-home'
+              
+              className="w-full bg-[#f9ca24] rounded-xl text-center text-white font-medium p-2 mt-5"
+            >
+              Done
+            </Link>
+          </div>
         </div>
       </div>
+      
     </div>
+    
   );
 };
 
-export default AcceptRidePopUpPannel;
+export default FinishRide;

@@ -1,4 +1,5 @@
 import React from 'react'
+import 'remixicon/fonts/remixicon.css'
 import {Route, Routes} from 'react-router-dom'
 import Home from './Pages/Home'
 import UserSignUp from './Pages/UserSignUp'
@@ -12,6 +13,8 @@ import DriverHome from './Pages/DriverHome'
 import DriverProtected from './Pages/DrvierProtected'
 import DriverLogout from './Pages/DriverLogout'
 import StartRidding from './Pages/StartRidding'
+import DriverRidding from './Pages/DriverRidding'
+
 
 function App() {
   return (
@@ -27,6 +30,7 @@ function App() {
         <Route path='/driver-home' element={<DriverProtected><DriverHome/></DriverProtected>}/>
         <Route path='/driver/logout' element = {<DriverProtected><DriverLogout/></DriverProtected>}/>
         <Route path='/riding' element = {<StartRidding/>}/>
+       <Route path='/driver-riding' element={<DriverRidding/>}/>
       </Routes>
     </div>
   )
