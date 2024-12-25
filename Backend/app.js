@@ -8,6 +8,7 @@ connectToDb();
 const userRoute = require("./routes/user.routes")
 const cookieParser = require("cookie-parser")
 const driverRoute = require("./routes/driver.routes")
+const mapRoutes = require('./routes/maps.routes')
 
 app.use(cors())
 app.use(express.json());
@@ -22,6 +23,7 @@ app.get("/", (req,res) => {
 
 app.use("/users", userRoute)
 app.use("/driver", driverRoute)
+app.use("/maps", mapRoutes)
 
 
 module.exports = app
