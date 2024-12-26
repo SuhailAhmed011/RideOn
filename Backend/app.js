@@ -9,6 +9,7 @@ const userRoute = require("./routes/user.routes")
 const cookieParser = require("cookie-parser")
 const driverRoute = require("./routes/driver.routes")
 const mapRoutes = require('./routes/maps.routes')
+const validateRidesRoute = require('./routes/validateRides.routes')
 
 app.use(cors())
 app.use(express.json());
@@ -24,6 +25,7 @@ app.get("/", (req,res) => {
 app.use("/users", userRoute)
 app.use("/driver", driverRoute)
 app.use("/maps", mapRoutes)
+app.use("/rides", validateRidesRoute)
 
 
 module.exports = app
