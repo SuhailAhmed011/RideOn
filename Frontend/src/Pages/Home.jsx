@@ -27,6 +27,7 @@ const Home = () => {
   const [ destinationSuggestions, setDestinationSuggestions ] = useState([])  
   const [ activeField, setActiveField ] = useState(null)
   const [ fare, setFare ] = useState({})
+  const [vehicleType, setVehicleType] = useState(null)
 
   
 
@@ -161,8 +162,22 @@ async function findTrip() {
     }
 })
 
-
+console.log(response.data)
 setFare(response.data)
+}
+
+async function createRide() {
+  const response = await axios.post(`${import.meta.env.VITE_MAIN_URL}/rides/create`, {
+      pickup,
+      destination,
+      vehicleType
+  }, {
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+  })
+console.log(response.data)
+
 }
 
   return (
@@ -245,19 +260,33 @@ setFare(response.data)
         className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white"
       >
         <VehiclePanel
+          selectVehicle={setVehicleType}
           setSelectedRidePanel={setSelectedRidePanel}
           setVehiclePannel={setVehiclePannel}
+          fare={fare}
         />
       </div>
       <div
         ref={selectedRidePannelRef}
         className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white"
       >
-        <SelectedRide setSelectedRidePanel={setSelectedRidePanel} setLookingForRide={setLookingForRide} /> 
+        <SelectedRide
+        pickup={pickup}
+        destination={destination}
+        vehicleType={vehicleType}
+        fare={fare}
+        createRide={createRide}
+         setSelectedRidePanel={setSelectedRidePanel} setLookingForRide={setLookingForRide} /> 
       </div>
       <div ref={lookingForRideRef} className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white">
         
-       <LookingForDriver setLookingForRide={setLookingForRide}/>
+       <LookingForDriver
+        pickup={pickup}
+        destination={destination}
+        vehicleType={vehicleType}
+        fare={fare}
+        createRide={createRide}
+       setLookingForRide={setLookingForRide}/>
       </div>
 
       <div ref={waitingForDriverRef} className=" fixed z-10 bottom-0 px-3 py-6 w-full translate-y-full bg-white">
@@ -269,3 +298,5 @@ setFare(response.data)
 };
 
 export default Home;
+
+// 8.53.40 timestamp video

@@ -16,20 +16,20 @@ const SelectedRide = (props) => {
       <i className=" text-lg ri-map-pin-3-fill"></i>
       <div>
         <h3 className='text-lg font-bold'>A-31</h3>
-        <p className='text-sm text-gray-800 -mt-1'>Near Jaipur Store, Sanganer Road, Bhilwara </p>
+        <p className='text-sm text-gray-800 -mt-1'>{props.pickup} </p>
       </div>
       </div>
       <div className='flex items-centern gap-5 p-3 border-b-2'>
       <i className="text-lg ri-map-pin-line"></i>
       <div>
         <h3 className='text-lg font-bold'>Sector-21</h3>
-        <p className='text-sm text-gray-800 -mt-1'>Hotel Imperial Prime, Bhilwara </p>
+        <p className='text-sm text-gray-800 -mt-1'>{props.destination} </p>
       </div>
       </div>
       <div className='flex items-centern gap-5 p-3 '>
       <i className=" text-lg ri-cash-line"></i>
       <div>
-        <h3 className='text-lg font-bold'>&#8377;174.30</h3>
+        <h3 className='text-lg font-bold'>&#8377; {props.fare[props.vehicleType]}</h3>
         <p className='text-sm text-gray-800 -mt-1'>Cash </p>
       </div>
       </div>
@@ -37,6 +37,7 @@ const SelectedRide = (props) => {
       <button onClick={()=>{
         props.setLookingForRide(true)
         props.setSelectedRidePanel(false)
+        props.createRide()
       }} className='w-full bg-[#30336b] rounded-xl text-white font-medium p-2 mt-5'>Confirm</button>
       </div>
     </div>
