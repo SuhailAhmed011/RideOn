@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
-import LocationSerach from "../components/LocationSerach";
+import axios from 'axios'
+import LocationSearchPanel from "../components/LocationSearch";
 import VehiclePanel from "../components/VehiclePanel";
 import SelectedRide from "../components/SelectedRide";
 import LookingForDriver from "../components/LookingForDriver";
@@ -22,10 +23,12 @@ const Home = () => {
   const [selectedRidePannel, setSelectedRidePanel] = useState(false);
   const [lookingForRide, setLookingForRide] = useState(false)
   const [waitingForDriver, setWaitingForDriver] = useState(false)
+  const [ pickupSuggestions, setPickupSuggestions ] = useState([])
+  const [ destinationSuggestions, setDestinationSuggestions ] = useState([])  
+  const [ activeField, setActiveField ] = useState(null)
+  const [ fare, setFare ] = useState({})
 
-  const submitButtonHandler = (e) => {
-    e.preventDefault();
-  };
+  
 
   // Using Gsap here for transition of pannels- main pannel
   useGSAP(
@@ -109,6 +112,59 @@ const Home = () => {
     },
     [waitingForDriver]
   );
+
+  const handlePickupChange = async (e) => {
+    setPickup(e.target.value)
+    try {
+        const response = await axios.get(`${import.meta.env.VITE_MAIN_URL}/maps/get-suggestions`, {
+            params: { input: e.target.value },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+
+        })
+        setPickupSuggestions(response.data)
+    } catch(error) {
+        console.error(error)
+        throw error
+    }
+}
+
+const handleDestinationChange = async (e) => {
+  setDestination(e.target.value)
+  try {
+      const response = await axios.get(`${import.meta.env.VITE_MAIN_URL}/maps/get-suggestions`, {
+          params: { input: e.target.value },
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+      })
+      setDestinationSuggestions(response.data)
+  } catch(error) {
+      console.error(error)
+      throw error
+  }
+}
+
+const submitButtonHandler = (e) => {
+  e.preventDefault();
+};
+
+async function findTrip() {
+  setVehiclePannel(true)
+  setFullScreen(false)
+
+  const response = await axios.get(`${import.meta.env.VITE_MAIN_URL}/rides/get-fare`, {
+    params: { pickup, destination },
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+})
+
+
+setFare(response.data)
+}
+
   return (
     <div className="h-screen relative overflow-hidden">
       <img
@@ -141,11 +197,10 @@ const Home = () => {
             >
               <input
                 value={pickup}
-                onChange={(e) => {
-                  setPickup(e.target.value);
-                }}
+                onChange={handlePickupChange}
                 onClick={() => {
                   setFullScreen(true);
+                  setActiveField('pickup')
                 }}
                 className=" bg-[#dfe6e9] w-full py-2 px-8 rounded-lg mb-3 mt-2 text-sm"
                 type="text"
@@ -153,22 +208,33 @@ const Home = () => {
               />
               <input
                 value={destination}
-                onChange={(e) => {
-                  setDestination(e.target.value);
-                }}
+                onChange={handleDestinationChange}
                 onClick={() => {
                   setFullScreen(true);
+                  setActiveField('destination')
                 }}
                 className="bg-[#dfe6e9] w-full py-2 px-8 rounded-lg text-sm"
                 type="text"
                 placeholder="Destination"
               />
             </form>
+            <button
+                        onClick={findTrip}
+                        className='bg-black text-white px-4 py-2 rounded-lg mt-3 w-full'>
+                        Find
+                    </button>
           </div>
           <div ref={fullScreenRef} className=" bg-white  h-0 ">
-            <LocationSerach
-              setFullScreen={setFullScreen}
-              setVehiclePannel={setVehiclePannel}
+            <LocationSearchPanel
+               suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
+               
+               setVehiclePannel={setVehiclePannel}
+               setPickup={setPickup}
+               setDestination={setDestination}
+               setFullScreen={setFullScreen}
+               activeField={activeField}
+              
+              
             />
           </div>
         </div>
